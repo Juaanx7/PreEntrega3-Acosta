@@ -9,6 +9,8 @@ let precioCuota = calculoCuotas(monto, tasaInteres, cuotas);
 
 let devolucionTotal = devolucion(precioCuota, cuotas);
 
+let contenedor = document.getElementById("contenedor");
+
 //Creo un objeto para almacenar valores del prestamo.
 const valores = { montoTotal: devolucionTotal, precioCuota: precioCuota };
 
@@ -25,19 +27,33 @@ const totalCuotas = [];
 
 //Verifico que la cantidad de cuotas seleccionadas sea igual o menor a 12, en el caso de que sean mas, se notificara que supero el numero maximo de cuotas.
 if (cuotas <= 12) {
+
     for (let i = 1; i <= cuotas; i++) {
         //Con esta funcion calculo el interes del prestamo dependiendo la cantidad de cuotas que el usuario solicito.
-        calculoInteres(cuotas);
+        calculoInteres(cuotas);      
+
         //Atravez de este alert, se le muestra al usuario el precio de cada cuota atravez de una funcion que calcula el valor de cada una dependiendo el interes      
-        alert("Precio cuota " + i + ": " + valores.precioCuota);
+        //alert("Precio cuota " + i + ": " + valores.precioCuota);
+
         //Agrego el valor de la cuota al array.
         totalCuotas.push(new valoresDeCuotas(i, valores.precioCuota))
         console.log(totalCuotas);
 
     }
+    //Atravez de este foreach se muestra en la pagina el numero de la cuota y su valor:
+    totalCuotas.forEach(cuota => {
+        let div = document.createElement("div");
+        div.innerHTML = `
+        <h2>Precio cuota: ${cuota.id} : ${valores.precioCuota}</h2>
+        `;
+    });
 
-    alert("En total devolvera: " + valores.montoTotal);
-    //Verifico que se haya cargado los valores de las cuotas al array
+
+    //Muestro en la pagina el monto total a devolver:
+    let montoTotalHtml = document.getElementById("montoTotalHtml")
+    montoTotalHtml.innerHTML = "En total devolvera: " + valores.montoTotal;
+
+    //Verifico que se haya cargado los valores de las cuotas al array 
     console.log(totalCuotas.length);
     console.log(totalCuotas[1]);
 
@@ -52,7 +68,9 @@ if (cuotas <= 12) {
 
     //Verifico que el numero ingresado por el usuario es igual o menor a la cantidad de cuotas que selecciono anteriormente. Tambien se verifica que el numero sea distinto a 0.
     if (resultado <= cuotas && resultado != 0) {
-        alert("Precio cuota " + respuestaUsuario + ": " + valores.precioCuota);
+        let precioCuotaHtml = document.getElementById("precioCuotaHtml");
+        precioCuotaHtml.innerHTML = "Precio cuota " + respuestaUsuario + ": " + valores.precioCuota
+        //alert("Precio cuota " + respuestaUsuario + ": " + valores.precioCuota);
     } else {
         alert("Adios!")
     }
