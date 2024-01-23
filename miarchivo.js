@@ -27,13 +27,24 @@ class valoresDeCuotas {
 //Creo un array donde almaceno los objetos con el valor de las cuotas.
 const totalCuotas = [];
 
+//evento al dar click en el boton:
 let boton = document.getElementById("boton");
-boton.addEventListener("click", () => solicitar());
+boton.addEventListener("click", () => tomarDatos());
 
-const solicitar = () => {
-    let monto = Number(document.getElementById("monto"));
-    let cuotas = Number(document.getElementById("cuotas"));
+//con esta funcion tomo los valores de los input del html:
+const tomarDatos = () => {
+    let monto = document.getElementById("monto").value;
+    let cuotas = document.getElementById("cuotas").value;
+    //Verifico que los valores esten almacenados en las variables:
     console.log(monto);
+    console.log(cuotas);
+    //Llamo a la funcion con la cual hago los calculos necesarios:
+    procesarDatos(monto, cuotas)
+}
+
+//En esta funcion hago todos los calculos del prestamo:
+const procesarDatos = (monto, cuotas) => {    
+    console.log("Segunda comprobacion: " + monto);
     console.log(cuotas);
     //Verifico que la cantidad de cuotas seleccionadas sea igual o menor a 12, en el caso de que sean mas, se notificara que supero el numero maximo de cuotas.
     if(cuotas <= 12) {
@@ -41,14 +52,15 @@ const solicitar = () => {
         for (let i = 1; i <= cuotas; i++) {
             //Con esta funcion calculo el interes del prestamo dependiendo la cantidad de cuotas que el usuario solicito.
             calculoInteres(cuotas);
-
             //Atravez de este alert, se le muestra al usuario el precio de cada cuota atravez de una funcion que calcula el valor de cada una dependiendo el interes      
             //alert("Precio cuota " + i + ": " + valores.precioCuota);
+            
+            //Con esta funcion calculo el valor de las cuotas:
+            calculoCuotas(monto, tasaInteres, cuotas);
 
             //Agrego el valor de la cuota al array.
             totalCuotas.push(new valoresDeCuotas(i, valores.precioCuota))
-            console.log(totalCuotas);
-
+            console.log("Precio cuota " + valores.precioCuota);
         }
         //Atravez de este foreach se muestra en la pagina el numero de la cuota y su valor:
         totalCuotas.forEach(cuota => {
@@ -87,6 +99,7 @@ const solicitar = () => {
     } else {
         alert("supero el maximo de cuotas permitido!");
     }
+    
 }
 
 //Calcula el interes de acuerdo las cuotas solicitadas.
