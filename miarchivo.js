@@ -1,13 +1,6 @@
-let tasaInteres = calculoInteres(cuotas);
-let precioCuota = calculoCuotas(monto, tasaInteres, cuotas);
-//let devolucionTotal = devolucion(precioCuota, cuotas);
-
 let contenedor = document.getElementById("contenedor");
 
 let contenedor2 = document.getElementById("contenedor2");
-
-//Creo un objeto para almacenar valores del prestamo.
-//const valores = { montoTotal: devolucionTotal, precioCuota: precioCuota };
 
 //Creo una clase con el constructor de los objetos que almacenara el array.
 class valoresDeCuotas {
@@ -51,7 +44,10 @@ const procesarDatos = (monto, cuotas) => {
       console.log("Precio cuota " + precioCuota);
     }
     //Creo un objeto para almacenar valores del prestamo.
-    const valores = { montoTotal: devolucion(totalCuotas), precioCuota: calculoCuotas(monto, tasaInteres, cuotas) };
+    let tasaInteres = calculoInteres(cuotas);
+    let precioCuota = calculoCuotas(monto, tasaInteres, cuotas);
+    let devolucionTotal = devolucion(precioCuota, cuotas);
+    const valores = { montoTotal: devolucionTotal, precioCuota: precioCuota };
     console.log("Verifico el objeto: " + Object.values(valores));
 
     //Almaceno el array de objetos en un sessionstorage:
@@ -78,8 +74,7 @@ const procesarDatos = (monto, cuotas) => {
 
     //Muestro en la pagina el monto total a devolver:
     let montoTotalHtml = document.getElementById("montoTotalHtml");
-    let devolucion2 = devolucion(totalCuotas)
-    montoTotalHtml.innerHTML = "En total devolvera: " + devolucion2;
+    montoTotalHtml.innerHTML = "En total devolvera: $" + devolucionTotal;
 
     //Se le consulta al usuario si quiere ver el valor de una cuota en particular:
     let consultaUsuario = document.getElementById("consultaUsuario");
@@ -95,20 +90,20 @@ const procesarDatos = (monto, cuotas) => {
     let botonConsulta = document.getElementById("botonConsulta");
     botonConsulta.addEventListener("click", () => {
       //Tomo el valor que el usuario ingreso en ese input
-      let respuestaUsuario = document.getElementById("revisarCuota");
-      console.log(respuestaUsuario);
+      let respuestaUsuario = document.getElementById("respuestaUsuario").value;
+      console.log("Respuesta user: " + respuestaUsuario);
 
       //Hago la busqueda en el array de la cuota que el usuario eligio:
       let resultado = totalCuotasRecuperado.find(
         (i) => i.id === respuestaUsuario
       );
-      console.log(resultado);
+      console.log("Resultado de busqueda en array: " + resultado);
 
       //Verifico que el numero ingresado por el usuario es igual o menor a la cantidad de cuotas que selecciono anteriormente:
       if (resultado <= cuotas && resultado != 0) {
         let precioCuotaHtml = document.getElementById("precioCuotaHtml");
         precioCuotaHtml.innerHTML =
-          "Precio cuota $" + respuestaUsuario + ": " + valores.precioCuota;
+          "Precio cuota " + respuestaUsuario + ": " + precioCuota;
       } else {
         let mensajeFinal = document.getElementById("mensajeFinal");
         mensajeFinal.innerHTML = "Verifique el numero de cuota que consulto";
@@ -145,10 +140,7 @@ function calculoCuotas(monto, tasaInteres, cuotas) {
 
 //Calcula el monto total que el usuario debe devolver.
 
-function devolucion(totalCuotasRecuperado) {
-  console.log(`valor cuota de array: ${totalCuotasRecuperado.precioCuota}`);
-  let total = totalCuotasRecuperado.precioCuota
-
-  //let total = precioCuota * cuotas;
+function devolucion(precioCuota, cuotas) {
+  let total = precioCuota * cuotas;
   return total;
 }
