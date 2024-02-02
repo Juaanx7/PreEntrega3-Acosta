@@ -4,9 +4,9 @@ let contenedor2 = document.getElementById("contenedor2");
 
 //Creo una clase con el constructor de los objetos que almacenara el array.
 class valoresDeCuotas {
-  constructor(id, precioCuota) {
+  constructor(id, precioCuotaSinDecimales) {
     this.id = id;
-    this.precioCuota = precioCuota;
+    this.precioCuotaSinDecimales = precioCuotaSinDecimales;
   }
 }
 //Creo un array donde almaceno los objetos con el valor de las cuotas.
@@ -35,19 +35,21 @@ const procesarDatos = (monto, cuotas) => {
       //Con esta funcion calculo el interes del prestamo dependiendo la cantidad de cuotas que el usuario solicito.
       let tasaInteres = calculoInteres(cuotas);
       let precioCuota = calculoCuotas(monto, tasaInteres, cuotas);
+      let precioCuotaSinDecimales = Math.floor(precioCuota);
       //Con esta funcion calculo el valor de las cuotas:
-      totalCuotas.push(new valoresDeCuotas(i, precioCuota));
+      totalCuotas.push(new valoresDeCuotas(i, precioCuotaSinDecimales));
 
       //Agrego el valor de la cuota al array.
 
       //Hago una verificacion de que se este almacenando el valor de cada cuota
-      console.log("Precio cuota " + precioCuota);
+      console.log("Precio cuota " + precioCuotaSinDecimales);
     }
     //Creo un objeto para almacenar valores del prestamo.
     let tasaInteres = calculoInteres(cuotas);
     let precioCuota = calculoCuotas(monto, tasaInteres, cuotas);
+    let precioCuotaSinDecimales = Math.floor(precioCuota);
     let devolucionTotal = devolucion(precioCuota, cuotas);
-    const valores = { montoTotal: devolucionTotal, precioCuota: precioCuota };
+    const valores = { montoTotal: devolucionTotal, precioCuota: precioCuotaSinDecimales };
     console.log("Verifico el objeto: " + Object.values(valores));
 
     //Almaceno el array de objetos en un sessionstorage:
@@ -67,7 +69,7 @@ const procesarDatos = (monto, cuotas) => {
     totalCuotasRecuperado.forEach((cuota) => {
       let div = document.createElement("div");
       div.innerHTML = `
-            <h5>Precio cuota: ${cuota.id} : $ ${cuota.precioCuota}</h5>
+            <h5>Precio cuota: ${cuota.id} : $ ${cuota.precioCuotaSinDecimales}</h5>
             `;
       contenedor2.append(div);
     });
@@ -91,24 +93,24 @@ const procesarDatos = (monto, cuotas) => {
     botonConsulta.addEventListener("click", () => {
       //Tomo el valor que el usuario ingreso en ese input
       let respuestaUsuario = document.getElementById("respuestaUsuario").value;
-      console.log("Respuesta user: " + respuestaUsuario);
-
-      //Hago la busqueda en el array de la cuota que el usuario eligio:
-      let resultado = totalCuotasRecuperado.find(
-        (i) => i.id === respuestaUsuario
-      );
-      console.log("Resultado de busqueda en array: " + resultado);
+      console.log("Respuesta user: " + respuestaUsuario);      
 
       //Verifico que el numero ingresado por el usuario es igual o menor a la cantidad de cuotas que selecciono anteriormente:
-      if (resultado <= cuotas && resultado != 0) {
+      if (respuestaUsuario <= cuotas && respuestaUsuario != 0) {
+        //Hago la busqueda en el array de la cuota que el usuario eligio:
+        let cuotaEncontrada = encontrarCuota(respuestaUsuario, totalCuotasRecuperado);
+        console.log("Resultado de busqueda en array: " + cuotaEncontrada);
+
         let precioCuotaHtml = document.getElementById("precioCuotaHtml");
         precioCuotaHtml.innerHTML =
-          "Precio cuota " + respuestaUsuario + ": " + precioCuota;
+          "Precio cuota " + respuestaUsuario + ": $" + precioCuotaSinDecimales;
       } else {
         let mensajeFinal = document.getElementById("mensajeFinal");
         mensajeFinal.innerHTML = "Verifique el numero de cuota que consulto";
       }
     });
+  } else {
+    alert("El numero maximo de cuotas permitido es 12!")
   }
 };
 
@@ -143,4 +145,9 @@ function calculoCuotas(monto, tasaInteres, cuotas) {
 function devolucion(precioCuota, cuotas) {
   let total = precioCuota * cuotas;
   return total;
+}
+
+// Función para encontrar la cuota por su ID
+function encontrarCuota(respuestaUsuario, totalCuotasRecuperado) {
+  return totalCuotasRecuperado.find(cuota => cuota.id === respuestaUsuario);
 }
