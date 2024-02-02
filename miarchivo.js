@@ -31,6 +31,14 @@ const tomarDatos = () => {
 const procesarDatos = (monto, cuotas) => {
   //Verifico que la cantidad de cuotas seleccionadas sea igual o menor a 12, en el caso de que sean mas, se notificara que supero el numero maximo de cuotas.
   if (cuotas <= 12) {
+    Toastify({
+
+      text: "Solicitud procesada con exito!",
+      
+      duration: 3000
+      
+      }).showToast();
+      
     for (let i = 1; i <= cuotas; i++) {
       //Con esta funcion calculo el interes del prestamo dependiendo la cantidad de cuotas que el usuario solicito.
       let tasaInteres = calculoInteres(cuotas);
@@ -110,7 +118,11 @@ const procesarDatos = (monto, cuotas) => {
       }
     });
   } else {
-    alert("El numero maximo de cuotas permitido es 12!")
+    Swal.fire({
+      icon: "error",
+      title: "Oops...",
+      text: "¡El numero maximo de cuotas permitido es 12!"
+    });
   }
 };
 
