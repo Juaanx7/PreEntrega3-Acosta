@@ -2,6 +2,9 @@ let contenedor = document.getElementById("contenedor");
 
 let contenedor2 = document.getElementById("contenedor2");
 
+let contenedor3 = document.getElementById("contenedor3");
+
+
 //Creo una clase con el constructor de los objetos que almacenara el array.
 class valoresDeCuotas {
   constructor(id, precioCuotaSinDecimales) {
@@ -31,6 +34,13 @@ const tomarDatos = () => {
 const procesarDatos = (monto, cuotas) => {
   //Verifico que la cantidad de cuotas seleccionadas sea igual o menor a 12, en el caso de que sean mas, se notificara que supero el numero maximo de cuotas.
   if (cuotas <= 12) {
+    Toastify({
+      text: "Solicitud procesada con exito!",      
+      duration: 3000,
+      style: {
+        background: "linear-gradient(to right, #00b09b, #96c93d)",      
+      }}).showToast();
+
     for (let i = 1; i <= cuotas; i++) {
       //Con esta funcion calculo el interes del prestamo dependiendo la cantidad de cuotas que el usuario solicito.
       let tasaInteres = calculoInteres(cuotas);
@@ -86,7 +96,7 @@ const procesarDatos = (monto, cuotas) => {
     div.innerHTML = `
             <button id="botonConsulta">Consultar</button>
         `;
-    contenedor.append(div);
+    contenedor3.append(div);
 
     //Al darle click al boton para la consulta se ejecuta lo siguiente:
     let botonConsulta = document.getElementById("botonConsulta");
@@ -104,13 +114,21 @@ const procesarDatos = (monto, cuotas) => {
         let precioCuotaHtml = document.getElementById("precioCuotaHtml");
         precioCuotaHtml.innerHTML =
           "Precio cuota " + respuestaUsuario + ": $" + precioCuotaSinDecimales;
-      } else {
-        let mensajeFinal = document.getElementById("mensajeFinal");
-        mensajeFinal.innerHTML = "Verifique el numero de cuota que consulto";
+      } else {        
+        Toastify({
+          text: "Verifique el numero de cuota que consulto",      
+          duration: 3000,
+          style: {
+            background: "linear-gradient(to right, #e74c3c, #000000)",      
+          }}).showToast();
       }
     });
   } else {
-    alert("El numero maximo de cuotas permitido es 12!")
+    Swal.fire({
+      icon: "error",
+      title: "Oops...",
+      text: "¡El numero maximo de cuotas permitido es 12!"
+    });
   }
 };
 
