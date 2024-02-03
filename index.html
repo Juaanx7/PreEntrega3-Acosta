@@ -3,43 +3,31 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
     <title>Calculador de prestamo</title>
 </head>
-<body>
-      
-    <div id="contenedor" class="container text-center card w-50 my-5">
-        <div class="row card-body">
-            <div class="col card-tittle">
-                <h1>Calculador de prestamo:</h1>
-            </div>  
-            <div class="card-text">
-                <div class="form-group my-3">
-                    <p>Indique el monto a solicitar:</p>
-                    <input type="text" id="monto"> 
-                </div>
-                <div class="form-group my-3">
-                    <p>Indique en cuantas cuotas quiere devolverlo</p>
-                    <input type="text" id="cuotas" placeholder="Maximo 12 cuotas">                    
-                </div>
-                <button id="boton" class="btn btn-primary">Solicitar</button> 
-            </div>                            
-            <h3 id="montoTotalHtml" class="mx-auto p-4"></h3>
-            
-        </div>    
+<body>    
+    <h1>Calculador de prestamo</h1>
+    
+    <div>
+        <p>Indique el monto a solicitar:</p>
+        <input type="text" id="monto">
+        <p>Indique en cuantas cuotas quiere devolverlo</p>
+        <input type="text" id="cuotas" placeholder="Maximo 12 cuotas">
+        <button id="boton">Solicitar</button>
     </div>
+    
+    <h3 id="montoTotalHtml"></h3>
 
     <div id="contenedor2"></div>
+
     <p id="consultaUsuario"></p>
     <input type="text" id="respuestaUsuario">    
     
-    <div id="contenedor3"></div>
+    <div id="contenedor"></div>
+
     <h5 id="precioCuotaHtml"></h5>
     <p id="mensajeFinal"></p>
 
     <script src="./miarchivo.js"></script>
-    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
 </body>
 </html>
