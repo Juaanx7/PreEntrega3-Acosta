@@ -10,27 +10,42 @@
 <body>
       
     <div id="contenedor" class="container text-center card w-50 my-5">
-        <div class="row card-body">
-            <div class="col card-tittle">
-                <h1>Calculador de prestamo:</h1>
-            </div>  
-            <div class="card-text">
-                <div class="form-group my-3">
-                    <p>Indique el monto a solicitar:</p>
-                    <input type="text" id="monto"> 
-                </div>
-                <div class="form-group my-3">
-                    <p>Indique en cuantas cuotas quiere devolverlo</p>
-                    <input type="text" id="cuotas" placeholder="Maximo 12 cuotas">                    
-                </div>
-                <button id="boton" class="btn btn-primary">Solicitar</button> 
-            </div>                            
-            <h3 id="montoTotalHtml" class="mx-auto p-4"></h3>
-            
+        <div class="row">
+            <div class="card-body">
+                <div class="col card-tittle">
+                    <h1>Calculador de prestamo:</h1>
+                </div>  
+                <div class="card-text">
+                    <div class="form-group my-3">
+                        <p>Indique el monto a solicitar:</p>
+                        <input type="text" id="monto"> 
+                    </div>
+                    <div class="form-group my-3">
+                        <p>Indique en cuantas cuotas quiere devolverlo</p>
+                        <input type="text" id="cuotas" placeholder="Maximo 12 cuotas">                    
+                    </div>
+                    <button id="boton" class="btn btn-primary">Solicitar</button> 
+                </div>                            
+                <h3 id="montoTotalHtml" class="mx-auto p-4"></h3>     
+            </div>
+            <div class="table-responsive col">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Numero de Cuota</th>
+                            <th>Monto de la cuota</th>
+                        </tr>
+                    </thead>
+                    <tbody id="cuerpoTabla">
+
+                    </tbody>
+                </table>
+            </div>          
         </div>    
     </div>
 
-    <div id="contenedor2"></div>
+    
+
     <p id="consultaUsuario"></p>
     <input type="text" id="respuestaUsuario">    
     

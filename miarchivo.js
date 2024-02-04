@@ -1,8 +1,10 @@
 let contenedor = document.getElementById("contenedor");
 
-let contenedor2 = document.getElementById("contenedor2");
+//let contenedor2 = document.getElementById("contenedor2");
 
 let contenedor3 = document.getElementById("contenedor3");
+
+let cuerpoTabla = document.getElementById("cuerpoTabla");
 
 
 //Creo una clase con el constructor de los objetos que almacenara el array.
@@ -49,8 +51,6 @@ const procesarDatos = (monto, cuotas) => {
       //Con esta funcion calculo el valor de las cuotas:
       totalCuotas.push(new valoresDeCuotas(i, precioCuotaSinDecimales));
 
-      //Agrego el valor de la cuota al array.
-
       //Hago una verificacion de que se este almacenando el valor de cada cuota
       console.log("Precio cuota " + precioCuotaSinDecimales);
     }
@@ -77,11 +77,18 @@ const procesarDatos = (monto, cuotas) => {
 
     //Atravez de este foreach se muestra en la pagina el numero de la cuota y su valor:
     totalCuotasRecuperado.forEach((cuota) => {
-      let div = document.createElement("div");
+      const fila = document.createElement("tr");
+      fila.innerHTML = `
+      <td>${cuota.id}</td>
+      <td>$${cuota.precioCuotaSinDecimales}</td>
+      `;
+      cuerpoTabla.appendChild(fila);
+      
+      /*let div = document.createElement("div");
       div.innerHTML = `
             <h5>Precio cuota: ${cuota.id} : $ ${cuota.precioCuotaSinDecimales}</h5>
             `;
-      contenedor2.append(div);
+      contenedor2.append(div); */
     });
 
     //Muestro en la pagina el monto total a devolver:
