@@ -1,11 +1,60 @@
 let contenedor = document.getElementById("contenedor");
 
-//let contenedor2 = document.getElementById("contenedor2");
-
 let contenedor3 = document.getElementById("contenedor3");
 
 let cuerpoTabla = document.getElementById("cuerpoTabla");
 
+//Llamado a la API de la cotizacion del dolar Oficial:
+fetch("https://dolarapi.com/v1/dolares/oficial")
+  .then(response => response.json())
+  .then(data => {
+    //Accedo a los datos que quiero mostrar
+    const oficialCompra = data.compra;
+    const oficialVenta = data.venta;
+    const fechaActualizacion = data.fechaActualizacion;    
+
+    //Le doy formato a la fecha que obtengo de la API:
+    const fechaHtml = document.getElementById("fechaActualizacion");
+    const fecha = new Date(fechaActualizacion);
+    const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+    const fechaFormateada = fecha.toLocaleDateString('es-AR', options);
+
+    //actualiza en el html:
+    document.getElementById("oficialCompra").innerText = "Compra: $" + oficialCompra;
+    document.getElementById("oficialVenta").innerText = "Venta: $" + oficialVenta;
+    fechaHtml.textContent = `Ultima actualizacion: ${fechaFormateada}`;
+  })
+  .catch(error => {
+    console.error("Error conexion a la APi:", error);
+    document.getElementById("oficialCompra").innerText = "No se pudo obtener la cotización";
+    document.getElementById("oficialCompra").innerText = "No se pudo obtener la cotización";
+  });
+
+  //Llamado a la API de la cotizacion del dolar Blue:
+  fetch("https://dolarapi.com/v1/dolares/blue")
+  .then(response => response.json())
+  .then(data => {
+    //Accedo a los datos que quiero mostrar
+    const blueCompra = data.compra;
+    const blueVenta = data.venta;
+    const fechaActualizacionBlue = data.fechaActualizacion;    
+
+    //Le doy formato a la fecha que obtengo de la API:
+    const fechaHtml = document.getElementById("fechaActualizacionBlue");
+    const fecha = new Date(fechaActualizacionBlue);
+    const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+    const fechaFormateada = fecha.toLocaleDateString('es-AR', options);
+
+    //actualiza en el html:
+    document.getElementById("blueCompra").innerText = "Compra: $" + blueCompra;
+    document.getElementById("blueVenta").innerText = "Venta: $" + blueVenta;
+    fechaHtml.textContent = `Ultima actualizacion: ${fechaFormateada}`;
+  })
+  .catch(error => {
+    console.error("Error conexion a la APi:", error);
+    document.getElementById("oficialCompra").innerText = "No se pudo obtener la cotización";
+    document.getElementById("oficialCompra").innerText = "No se pudo obtener la cotización";
+  });
 
 //Creo una clase con el constructor de los objetos que almacenara el array.
 class valoresDeCuotas {
@@ -101,7 +150,8 @@ const procesarDatos = (monto, cuotas) => {
       "Ingrese el numero de la cuota que desea verificar: ";
     let div = document.createElement("div");
     div.innerHTML = `
-            <button id="botonConsulta">Consultar</button>
+            <input type="text" id="respuestaUsuario">
+            <button id="botonConsulta" class="btn btn-success">Consultar</button>
         `;
     contenedor3.append(div);
 
